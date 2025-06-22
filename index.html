@@ -102,6 +102,7 @@
       height: 100%;
       width: 100%;
       background: black;
+      transition: background-color 0.2s ease;
     }
   </style>
 </head>
@@ -134,7 +135,7 @@
       if (track === 'vintage') {
         audio.src = 'Vintage Culture, Fideles & Be No Rain - Fallen Leaf (Massano Remix).mp3';
       } else if (track === 'feid') {
-        audio.src = 'Feid - ANDO XXIL.mp3'; // asegúrate de subir este archivo al repo
+        audio.src = 'feid.mp3'; // asegúrate de subir este archivo al repo
       }
       document.getElementById('flyer').style.display = 'none';
       document.getElementById('instructions').style.display = 'flex';
@@ -157,6 +158,8 @@
 
       audio.play();
 
+      const colors = ['#ffffff', '#ff00cc', '#00ffff', '#ff6600', '#9900ff', '#ff0033'];
+
       function animate() {
         requestAnimationFrame(animate);
         analyser.getByteFrequencyData(dataArray);
@@ -165,7 +168,15 @@
           sum += dataArray[i];
         }
         const average = sum / bufferLength;
-        exp.style.backgroundColor = average > 100 ? 'white' : 'black';
+
+        // Más dinámico: color según el promedio de frecuencia
+        if (average > 180) {
+          exp.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        } else if (average > 100) {
+          exp.style.backgroundColor = '#222';
+        } else {
+          exp.style.backgroundColor = 'black';
+        }
       }
 
       animate();
@@ -173,3 +184,4 @@
   </script>
 </body>
 </html>
+
